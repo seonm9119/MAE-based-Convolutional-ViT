@@ -1,0 +1,52 @@
+ENCODER: ''
+IMG_SIZE: (64, 8)
+N_CLASSES: 1000
+RATIO: 0.5
+MASK: 'rand'
+CHECKPOINT: ''
+
+TRAIN:
+  EPOCHS: 800
+  LR: 0.0005
+  WARMUP_EPOCHS: 5
+  BATCH_PER_GPU: 1024
+  OUTPUT_DIR: './cvt-21/save'
+LINPROBE:
+  EPOCHS: 50
+  LR: 1e-3
+  WARMUP_EPOCHS: 5
+  BATCH_PER_GPU: 1024
+  OUTPUT_DIR: './cvt-21/linprobe'
+FINETUNE:
+  EPOCHS: 100
+  LR: 1e-3
+  WARMUP_EPOCHS: 5
+  BATCH_PER_GPU: 1024
+  OUTPUT_DIR: './cvt-21/finetune'
+
+
+MODEL:
+  NAME: cls_cvt
+  SPEC:
+    INIT: 'trunc_norm'
+    NUM_STAGES: 3
+    PATCH_SIZE: [7, 3, 3]
+    PATCH_STRIDE: [4, 2, 2]
+    PATCH_PADDING: [2, 1, 1]
+    DIM_EMBED: [64, 192, 384]
+    NUM_HEADS: [1, 3, 6]
+    DEPTH: [1, 4, 16]
+    MLP_RATIO: [4.0, 4.0, 4.0]
+    ATTN_DROP_RATE: [0.0, 0.0, 0.0]
+    DROP_RATE: [0.0, 0.0, 0.0]
+    DROP_PATH_RATE: [0.0, 0.0, 0.1]
+    QKV_BIAS: [True, True, True]
+    CLS_TOKEN: [False, False, False]
+    POS_EMBED: [False, False, False]
+    QKV_PROJ_METHOD: ['dw_bn', 'dw_bn', 'dw_bn']
+    KERNEL_QKV: [3, 3, 3]
+    PADDING_KV: [1, 1, 1]
+    STRIDE_KV: [2, 2, 2]
+    PADDING_Q: [1, 1, 1]
+    STRIDE_Q: [1, 1, 1]
+
